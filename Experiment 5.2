@@ -1,0 +1,77 @@
+import java.io.*;
+
+// Student class implementing Serializable interface
+class Student implements Serializable {
+    private int id;
+    private String name;
+    private double gpa;
+
+    // Constructor
+    public Student(int id, String name, double gpa) {
+        this.id = id;
+        this.name = name;
+        this.gpa = gpa;
+    }
+
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+    // Method to display student details
+    public void displayDetails() {
+        System.out.println("Student ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("GPA: " + gpa);
+    }
+}
+
+public class SerializeDeserializeStudent {
+
+    public static void main(String[] args) {
+        // File where the student object will be serialized
+        String filename = "student.ser";
+
+        // Creating a Student object
+        Student student = new Student(1, "John Doe", 3.75);
+
+        // Serialize the student object to the file
+        serializeStudent(student, filename);
+
+        // Deserialize the student object from the file and display the details
+        Student deserializedStudent = deserializeStudent(filename);
+        if (deserializedStudent != null) {
+            deserializedStudent.displayDetails();
+        }
+    }
+
+    // Method to serialize a student object to a file
+    public static void serializeStudent(Student student, String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(student); // Serialize the student object
+            System.out.println("Student object serialized and saved to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error serializing the student: " + e.getMessage());
+        }
+    }
+
+    // Method to deserialize a student object from a file
+    public static Student deserializeStudent(String filename) {
+        Student student = null;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            student = (Student) in.readObject(); // Deserialize the student object
+            System.out.println("Student object deserialized from " + filename);
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error deserializing the student: " + e.getMessage());
+        }
+        return student;
+    }
+}
