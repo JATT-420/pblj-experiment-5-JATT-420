@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class AutoboxingUnboxingExample {
+
+    public static void main(String[] args) {
+        // Create a list of integers (using autoboxing to store Integer objects)
+        List<Integer> integerList = new ArrayList<>();
+        
+        // Add integers to the list (autoboxing will automatically convert int to Integer)
+        integerList.add(stringToInteger("10"));
+        integerList.add(stringToInteger("20"));
+        integerList.add(stringToInteger("30"));
+        integerList.add(stringToInteger("40"));
+        
+        // Calculate the sum of the integers using unboxing (Integer to int conversion)
+        int sum = calculateSum(integerList);
+        
+        // Print the sum
+        System.out.println("The sum of the list is: " + sum);
+    }
+    
+    // Method to convert a string to an Integer object (Wrapper class)
+    public static Integer stringToInteger(String str) {
+        try {
+            return Integer.valueOf(str); // Converts the string to an Integer
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format: " + str);
+            return 0; // Return 0 in case of an invalid format
+        }
+    }
+
+    // Method to calculate the sum of the list of Integer objects
+    public static int calculateSum(List<Integer> list) {
+        int sum = 0;
+        
+        // Loop through the list and unbox each Integer object to int
+        for (Integer num : list) {
+            sum += num; // Unboxing automatically happens here
+        }
+        
+        return sum;
+    }
+}
